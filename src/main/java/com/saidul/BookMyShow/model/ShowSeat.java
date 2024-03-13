@@ -8,10 +8,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class ShowSeat extends BaseModel{
+public class FilmShowSeat extends BaseModel{
     private int price;
     @ManyToOne
-    private MovieShow movieShow;
+    private FilmShow filmShow;
     @ManyToOne
     private  Seat seat;
     @Enumerated(EnumType.STRING)
