@@ -23,4 +23,12 @@ public class CityService {
         City city = cityRepository.findCityByName(cityName);
         return city;
     }
+
+    public City getCityById(int cityId){
+        City city = cityRepository.findById(cityId).get();
+        return city;
+    }
+    public City saveCity(City city){
+        return cityRepository.save(city);
+    }
 }

@@ -20,7 +20,7 @@ public class TicketService {
         for (int seatId : showSeatIds){
             ShowSeat seat = showSeatService.getShowSeat(seatId);
             if(!seat.getShowSeatStatus().equals(ShowSeatStatus.AVAILABLE)){
-                throw new Exception("Is not available for Booking");
+                throw new Exception("Seat is not available for Booking");
             }
         }
         for (int showSeatId : showSeatIds){
