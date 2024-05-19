@@ -1,9 +1,9 @@
 package com.saidul.BookMyShow.repository;
 
 import com.saidul.BookMyShow.model.Ticket;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-@Repository
-public interface TicketRepository extends JpaRepository<Ticket,Integer> {
+import java.util.UUID;
+
+public interface TicketRepository extends MongoRepository<Ticket, UUID> {
 }

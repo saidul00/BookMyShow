@@ -5,11 +5,13 @@ import com.saidul.BookMyShow.repository.ShowSeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class ShowSeatService {
     @Autowired
     private ShowSeatRepository showSeatRepository;
-    public ShowSeat getShowSeat(int showSeatId){
+    public ShowSeat getShowSeat(UUID showSeatId){
         return showSeatRepository.findById(showSeatId).get();
     }
 

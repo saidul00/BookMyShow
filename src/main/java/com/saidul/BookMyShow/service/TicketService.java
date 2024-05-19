@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TicketService {
@@ -16,14 +17,14 @@ public class TicketService {
     private ShowSeatService showSeatService;
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
-    public Ticket bookTicket(List<Integer> showSeatIds, int userId) throws Exception {
-        for (int seatId : showSeatIds){
+    public Ticket bookTicket(List<UUID> showSeatIds, UUID userId) throws Exception {
+        for (UUID seatId : showSeatIds){
             ShowSeat seat = showSeatService.getShowSeat(seatId);
             if(!seat.getShowSeatStatus().equals(ShowSeatStatus.AVAILABLE)){
                 throw new Exception("Seat is not available for Booking");
             }
         }
-        for (int showSeatId : showSeatIds){
+        for (UUID showSeatId : showSeatIds){
             ShowSeat seat = showSeatService.getShowSeat(showSeatId);
             seat.setShowSeatStatus(ShowSeatStatus.LOCKED);
             showSeatService.saveShowSeat(seat);
@@ -31,7 +32,7 @@ public class TicketService {
         startPayment(showSeatIds);
         return new Ticket();
     }
-    public boolean startPayment(List<Integer> showSeatIds){
+    public boolean startPayment(List<UUID> showSeatIds){
         return true;
     }
 }

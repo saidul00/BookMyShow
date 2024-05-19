@@ -5,11 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Getter
 @Setter
 public class BookTicketRequestDTO {
-    private List<Integer> showSeatIds;
-    private Integer userId;
+    private List<UUID> showSeatIds;
+    private UUID userId;
 }

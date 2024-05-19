@@ -1,9 +1,9 @@
 package com.saidul.BookMyShow.repository;
 
 import com.saidul.BookMyShow.model.Actor;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-@Repository
-public interface ActorRepository extends JpaRepository<Actor,Integer> {
+import java.util.UUID;
+
+public interface ActorRepository extends MongoRepository<Actor, UUID> {
 }

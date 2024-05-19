@@ -1,9 +1,10 @@
 package com.saidul.BookMyShow.repository;
 
 import com.saidul.BookMyShow.model.Film;
-import org.hibernate.type.descriptor.converter.spi.JpaAttributeConverter;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-@Repository
-public interface FilmRepository extends JpaAttributeConverter<Film,Integer> {
+import java.util.UUID;
+
+
+public interface FilmRepository extends MongoRepository<Film, UUID> {
 }

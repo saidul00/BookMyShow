@@ -1,10 +1,10 @@
 package com.saidul.BookMyShow.repository;
 
 import com.saidul.BookMyShow.model.City;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-@Repository
-public interface CityRepository extends JpaRepository<City, Integer> {
+import java.util.UUID;
+
+public interface CityRepository extends MongoRepository<City, UUID> {
     public City findCityByName(String city);
 }

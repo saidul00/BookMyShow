@@ -1,19 +1,20 @@
 package com.saidul.BookMyShow.model;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
-@MappedSuperclass
+@Document
 public abstract class BaseModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private int id;
+    private ObjectId id;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String createdBy;
