@@ -1,0 +1,6 @@
+This is a demo project of popular show ticket booking website bookmyshow.
+user can book movie ticket, show ticket, concert ticket, etc.
+
+I will be using java spring boot thorough out this project.
+Using REST APIs client can interect with service.
+While Initillay I used MySQL as data persistance, I have recently went through MongoDB basics this project will sort of my hands on approach learning no SQL Databases
