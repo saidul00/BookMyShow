@@ -4,29 +4,33 @@ import com.saidul.BookMyShow.dto.CityResponseDTO;
 import com.saidul.BookMyShow.model.City;
 import com.saidul.BookMyShow.service.CityService;
 import com.saidul.BookMyShow.service.CityServiceImpl;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
+import org.bson.types.ObjectId;
 
 @RestController
+@RequestMapping("/city")
 public class CityController {
     @Autowired
     private CityService cityService;
-    @PostMapping("/city")
+
+    @PostMapping
     public ResponseEntity<CityResponseDTO> createCity(@RequestBody CityRequestDTO cityRequestDTO){
         return ResponseEntity.ok(
                 cityService.createCity(cityRequestDTO)
         );
     }
 
-    @DeleteMapping("/city/{id}")
-    public ResponseEntity deleteCity(@PathVariable("id") UUID cityId){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteCity(@PathVariable("id") ObjectId cityId){
         boolean isDeleted = cityService.deleteCity(cityId);
         return ResponseEntity.ok(isDeleted);
     }
-    @GetMapping("/city/{name}")
+
+    @GetMapping("/{name}")
     public ResponseEntity<CityResponseDTO> getCity(@PathVariable("name") String cityName){
         return ResponseEntity.ok(
                 cityService.getCityByName(cityName)
