@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class TicketExceptionHandler {
     @ExceptionHandler(ShowSeatUnavailableException.class)
+
     public ResponseEntity<ExceptionResponseDTO> handleShowSeatUnavailableException(ShowSeatUnavailableException exception){
         ExceptionResponseDTO responseDTO= new ExceptionResponseDTO(exception.getMessage(), 410);
 

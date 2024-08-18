@@ -21,7 +21,7 @@ public class TicketServiceImpl implements TicketService{
     @Autowired
     private ShowSeatServiceImpl showSeatService;
     @Autowired
-    private TicketRepository ticketRepository;
+    private PaymentService paymentService;
 
 
     @Transactional(isolation = Isolation.SERIALIZABLE)
@@ -40,10 +40,7 @@ public class TicketServiceImpl implements TicketService{
             seat.setShowSeatStatus(ShowSeatStatus.LOCKED);
             showSeatService.saveShowSeat(seat);
         }
-        startPayment(ticketRequestDTO.getShowSeatIds());
+        paymentService.startPayment(ticketRequestDTO.getShowSeatIds());
         return new TicketResponseDTO();
-    }
-    public boolean startPayment(List<ObjectId> showSeatIds){
-        return true;
     }
 }

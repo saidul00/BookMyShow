@@ -1,26 +1,24 @@
 package com.saidul.BookMyShow.controller;
-import com.saidul.BookMyShow.dto.CityRequestDTO;
+import com.saidul.BookMyShow.dto.CreateCityRequestDTO;
 import com.saidul.BookMyShow.dto.CityResponseDTO;
-import com.saidul.BookMyShow.model.City;
+import com.saidul.BookMyShow.exception.CityAlreadyExistException;
 import com.saidul.BookMyShow.service.CityService;
-import com.saidul.BookMyShow.service.CityServiceImpl;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import org.bson.types.ObjectId;
 
 @RestController
 @RequestMapping("/city")
 public class CityController {
-    @Autowired
-    private CityService cityService;
+    private final CityService cityService;
+    public CityController(CityService cityService){
+        this.cityService=cityService;
+    }
 
     @PostMapping
-    public ResponseEntity<CityResponseDTO> createCity(@RequestBody CityRequestDTO cityRequestDTO){
+    public ResponseEntity<CityResponseDTO> createCity(@RequestBody CreateCityRequestDTO createCityRequestDTO) throws CityAlreadyExistException {
         return ResponseEntity.ok(
-                cityService.createCity(cityRequestDTO)
+                cityService.createCity(createCityRequestDTO)
         );
     }
 

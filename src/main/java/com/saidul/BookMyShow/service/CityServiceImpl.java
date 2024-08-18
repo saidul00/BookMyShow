@@ -1,8 +1,8 @@
 package com.saidul.BookMyShow.service;
 
-import com.saidul.BookMyShow.dto.CityRequestDTO;
+import com.saidul.BookMyShow.dto.CreateCityRequestDTO;
 import com.saidul.BookMyShow.dto.CityResponseDTO;
-import com.saidul.BookMyShow.dto.TheatreRequestDTO;
+import com.saidul.BookMyShow.exception.CityAlreadyExistException;
 import com.saidul.BookMyShow.model.City;
 import com.saidul.BookMyShow.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +10,22 @@ import org.springframework.stereotype.Service;
 
 import org.bson.types.ObjectId;
 
+import java.util.Optional;
+
 @Service
 public class CityServiceImpl implements CityService{
-    @Autowired
-    private CityRepository cityRepository;
+    private final CityRepository cityRepository;
+    public CityServiceImpl(CityRepository cityRepository){
+        this.cityRepository=cityRepository;
+    }
 
-    public CityResponseDTO createCity(CityRequestDTO cityRequestDTO){
-        City savedCity = cityRepository.save(CityRequestDTO.from(cityRequestDTO));
+    public CityResponseDTO createCity(CreateCityRequestDTO createCityRequestDTO) {
+        Optional<City> cityOptional = cityRepository.findCityByName(createCityRequestDTO.getName());
+        if(cityOptional.isPresent()){
+            throw new CityAlreadyExistException("City: " + createCityRequestDTO.getName() + ", already exist");
+        }
+
+        City savedCity = cityRepository.save(CreateCityRequestDTO.from(createCityRequestDTO));
         return CityResponseDTO.from(savedCity);
     }
 
@@ -26,8 +35,8 @@ public class CityServiceImpl implements CityService{
     }
 
     public CityResponseDTO getCityByName(String cityName){
-        City city = cityRepository.findCityByName(cityName);
-        return CityResponseDTO.from(city);
+        Optional<City> cityOptional = cityRepository.findCityByName(cityName);
+        return CityResponseDTO.from(cityOptional.get());
     }
 
     public City getCityById(ObjectId cityId){
