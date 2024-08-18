@@ -1,38 +1,37 @@
 package com.saidul.BookMyShow.controller;
-import com.saidul.BookMyShow.dto.CityRequestDTO;
-import com.saidul.BookMyShow.model.City;
+import com.saidul.BookMyShow.dto.CreateCityRequestDTO;
+import com.saidul.BookMyShow.dto.CityResponseDTO;
+import com.saidul.BookMyShow.exception.CityAlreadyExistException;
 import com.saidul.BookMyShow.service.CityService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/city")
 public class CityController {
-    @Autowired
-    private CityService cityService;
-    @PostMapping("/city")
-    public ResponseEntity createCity(@RequestBody CityRequestDTO cityRequestDTO){
-        try {
-            String cityName = cityRequestDTO.getName();
-            if(cityName == null || cityName.isEmpty() || cityName.isBlank()){
-                throw new Exception("City name is invalid");
-            }
-            City savedCity = cityService.saveCity(cityName);
-            return ResponseEntity.ok(savedCity);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
+    private final CityService cityService;
+    public CityController(CityService cityService){
+        this.cityService=cityService;
     }
 
-    @DeleteMapping("/city/{id}")
-    public ResponseEntity deleteCity(@PathVariable("id") int cityId){
+    @PostMapping
+    public ResponseEntity<CityResponseDTO> createCity(@RequestBody CreateCityRequestDTO createCityRequestDTO) throws CityAlreadyExistException {
+        return ResponseEntity.ok(
+                cityService.createCity(createCityRequestDTO)
+        );
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Boolean> deleteCity(@PathVariable("id") ObjectId cityId){
         boolean isDeleted = cityService.deleteCity(cityId);
         return ResponseEntity.ok(isDeleted);
     }
-    @GetMapping("/city/{name}")
-    public ResponseEntity getCity(@PathVariable("name") String cityName){
-        City savedCity = cityService.getCityByName(cityName);
-        return ResponseEntity.ok(savedCity);
+
+    @GetMapping("/{name}")
+    public ResponseEntity<CityResponseDTO> getCity(@PathVariable("name") String cityName){
+        return ResponseEntity.ok(
+                cityService.getCityByName(cityName)
+        );
     }
 }

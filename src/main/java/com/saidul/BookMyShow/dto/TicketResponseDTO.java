@@ -5,6 +5,5 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CityRequestDTO {
-    private String name;
+public class TicketResponseDTO {
 }
